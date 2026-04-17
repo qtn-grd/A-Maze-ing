@@ -1,0 +1,17 @@
+[project]
+name = "mazegen"
+version = "1.0.0"
+description = "Maze generator module"
+authors = [
+    { name = "ldemaill" },
+    { name = "qgairaud" }
+]
+readme = "README.md"
+requires-python = ">=3.9"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["mazegen"]
