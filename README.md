@@ -1,5 +1,9 @@
 *This project has been created as part of the 42 curriculum by ldemaill, qgairaud.*
 
+Thank you ldemaill for your generosity and sense of humor. You managed to brighten our labyrinthine wanderings with your good mood. Keep it up, great mate!
+
+Here is ldemaill personal GitHub, where you can find more about him and discover some of his outstanding projects: https://github.com/loicdemailly-source
+
 # A_maze_ing
 
 <p align="center">
