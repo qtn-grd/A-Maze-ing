@@ -55,13 +55,14 @@ def recup_config_lines() -> dict[str, str]:
                 if not line:
                     continue
                 if "=" not in line:
-                    print("Format error: missing =")
+                    print("Format error: add = to define your key")
                     sys.exit()
 
                 key, value = line.split("=", 1)
 
                 if not key or not value:
-                    print("Format error: missing key or value")
+                    print("Format error: "
+                          "missing key or value to generate a maze")
                     sys.exit()
 
                 key = key.strip()
@@ -211,7 +212,7 @@ def validate_and_convert(config: dict[str, str]) -> dict[str, Any]:
         try:
             seed = int(config["SEED"])
         except Exception:
-            print("Invalid SEED value")
+            print("Invalid value for SEED")
             sys.exit()
 
     return {

@@ -49,6 +49,6 @@ test:
 	$(PYTHON) -m pytest
 
 build:
-	$(PYTHON) -m build
+	python3 -m build
 
 .PHONY: install run debug clean fclean re lint lint-strict test build

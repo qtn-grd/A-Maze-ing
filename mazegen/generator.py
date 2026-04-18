@@ -282,3 +282,62 @@ class MazeGenerator:
             list[list[dict[str, bool]]]: The maze grid.
         """
         return self.maze
+
+    def display_maze(
+        self,
+        path: Optional[list[tuple[int, int]]] = None,
+    ) -> None:
+        """
+        Display the maze in the terminal using ASCII characters.
+
+        Walls, entry, exit, and optional solution path are rendered with
+        colors. The "42" pattern is displayed as filled cells.
+
+        Args:
+            path (Optional[list[tuple[int, int]]]): List of coordinates forming
+                the solution path. If None, no path is displayed.
+            color (str): ANSI color code used for walls.
+        """
+
+        path_set: set[tuple[int, int]] = set(path) if path else set()
+
+        top_line = ""
+        for _ in range(self.width):
+            top_line += "+---"
+        top_line += "+"
+
+        print(top_line)
+
+        for y, row in enumerate(self.maze):
+
+            inside_line = ""
+            bottom_line = ""
+
+            for x, cell in enumerate(row):
+
+                bottom_line += "+"
+
+                if cell["W"]:
+                    inside_line += "|"
+                else:
+                    inside_line += " "
+
+                if (x, y) == self.entry:
+                    inside_line += " E "
+                elif (x, y) == self.exit:
+                    inside_line += " X "
+                elif (x, y) in path_set:
+                    inside_line += " * "
+                else:
+                    inside_line += "   "
+
+                if cell["S"]:
+                    bottom_line += "---"
+                else:
+                    bottom_line += "   "
+
+            inside_line += "|"
+            bottom_line += "+"
+
+            print(inside_line)
+            print(bottom_line)

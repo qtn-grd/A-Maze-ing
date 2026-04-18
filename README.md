@@ -29,12 +29,12 @@ SEED is an optional integer parameter that allows reproducible maze generation.
 
 In this project, SEED must be an integer value for consistency and predictable reproducibility.
 
-To preserve readability in terminal rendering, maze dimensions are intentionally limited (e.g., width ≤ 60).
+To preserve readability in terminal rendering, maze dimensions are intentionally limited (e.g., 2 ≤ width ≤ 300).
 
 <details>
 <summary> 📝 Default example </summary>
 <br/>
-Here is an example of valid configuration you can copy/paste inside your config file:
+Here is an example of valid configuration you can copy/paste inside your config file after being created:
 <br/>
 
 ```
@@ -43,7 +43,8 @@ Here is an example of valid configuration you can copy/paste inside your config 
   ENTRY=22,7  
   EXIT=2,19  
   OUTPUT_FILE=maze.txt  
-  PERFECT=False  
+  PERFECT=False
+  SEED=42
 ```
 </details>
 
@@ -54,12 +55,12 @@ The program provides several interactive options for displaying the maze and its
 <br/>
 
 The program starts by checking for the existence of a configuration file `config.txt`, provided as an argument and containing the parameters mentioned earlier.
-If the configuration file does not exist, it uses values stored in another file, `default.txt`.
+If this configuration file does not exist, it uses values stored in another file, `config_default.txt`, who is already created.
 
 The program converts the data into a dictionary, and if the data is valid _(correct formats, all required parameters defined, distinct entry and exit points, no duplicates, etc.)_, it passes them to the `MazeGenerator` class.
 
 From there, the generator creates a grid with the given dimensions, determines the entry and exit cells, and inserts the 42 logo at the center if the maze is large enough.
-If the entry, the exit, or both would conflict with the central logo, the program stops with an explanatory error message.
+If the entry, the exit, or both of them conflict with the central logo, the program stops with an explanatory error message.
 
 Otherwise, the maze is generated using a first algorithm of the DFS type, `generate_maze_dfs`, which ensures that at least one wall is opened for each cell in the grid.
 If the configuration parameter Perfect=False, the algorithm removes additional walls to allow multiple solutions later in the program.
@@ -75,13 +76,16 @@ In addition to solving the maze, this allows the creation _(or overwriting)_ of 
 
 A Makefile is provided to simplify project usage.
 
-Available commands:
+First use the :
 
 - `make install`  
-  Creates a virtual environment and installs required dependencies.
+  To create a virtual environment and installs all required dependencies.
+
+
+Other available commands:
 
 - `make run`  
-  Runs the program using the configuration file.
+  Runs the program using the configuration file (`config.txt` if created, or `config_default.txt` instead).
 
 - `make debug`  
   Runs the program using Python’s debugger (`pdb`).
@@ -104,8 +108,12 @@ Available commands:
 - `make test`  
   Use pytest to execute some basic tests ranged inside the given `tests` repository.
 
+To export the core project _(maze without color or other addings)_, use
+
 - `make build`
-  Build the reusable `mazegen` package _(.whl and .tar.gz)_
+
+to build the reusable `mazegen` package _(.whl and .tar.gz)_
+_This command don't need to execute `make install` first._
 
 ## 📁 _Algorithms_
 
@@ -124,7 +132,7 @@ The maze generation is based on a DFS algorithm:
 - Removing walls between cells
 - Backtracking when reaching dead ends
 
-This approach ensures that every cell is reachable and the maze is fully connected
+This approach ensures that every cell is reachable and the maze is fully connected.
 
 
 ### Breadth-First Search (BFS)
@@ -147,17 +155,21 @@ This module is packaged using Python's standard build system and can be installe
 
 ### Build the package
 
-To build the package, execute this command 
+To build this simple package, execute the command 
 
 ```bash
 make build
 ```
 
-This will generate distribution files in the `dist/` directory:
+and it will generate distribution files in the `dist/` directory:
 - `.whl` (wheel package)
 - `.tar.gz` (source distribution)
 
+For convencience, those files are already provided. You can generate them again if they become unusable or missing.
+
 ### Basic usage
+
+Here is a small script you may copy/paste to a testing file and assure the efficiency of export package.
 
 ```python
 from mazegen import MazeGenerator
@@ -172,9 +184,22 @@ maze = MazeGenerator(
 )
 
 maze.generate()
+grid = maze.get_maze()
+print(grid)
+
+print()
+
+print("Unsolved maze:\n")
+print()
+maze.display_maze()
+
+print()
 
 path = maze.solve()
-grid = maze.get_maze()
+
+print("Solved maze:\n")
+print()
+maze.display_maze(path)
 ```
 
 ### Parameters

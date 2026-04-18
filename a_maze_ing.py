@@ -140,14 +140,14 @@ def main() -> None:
         print(f"{RED}Error invalid arguments or missing configuration"
               f" file{RESET}\nProgram executed in default mode\n")
 
-    while True:
-        print()
-        print("Loading our amazing project....\n")
-        fake_loading_bar(3, "Loading...")
-        print("\n")
-        print(f"{RED}FAIL !\n")
-        print(f"{RESET}--> Back to basic mode\n\n")
+    print()
+    print("Loading our amazing project....\n")
+    fake_loading_bar(3, "Loading...")
+    print("\n")
+    print(f"{RED}FAIL !\n")
+    print(f"{RESET}--> Back to basic mode\n\n")
 
+    while True:
         try:
             initial_dict = recup_config_lines()
             valid_dict = validate_and_convert(initial_dict)
